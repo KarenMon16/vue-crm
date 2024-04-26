@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div class="bigDiv">
     <table class="table">
       <thead>
       <tr>
@@ -47,5 +47,10 @@ export default {
 </script>
 
 <style>
+.bigDiv{
+  padding-left: 111px;
+  text-align-all: center;
+  width: 75%;
+}
 /* You can add custom styling for the table here if needed */
 </style>
