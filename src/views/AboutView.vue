@@ -1,7 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+  <TheContact contact=""/>
   </div>
+
 </template>
 
 <style>
@@ -13,3 +14,7 @@
   }
 }
 </style>
+<script setup>
+import Dashboard from "@/App.vue";
+import TheContact from "@/components/TheContact.vue";
+</script>

@@ -5,6 +5,7 @@ defineProps({
     required: true
   }
 })
+import 'bootstrap/dist/css/bootstrap.min.css';
 </script>
 
 <template>

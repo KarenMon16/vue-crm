@@ -1,6 +1,7 @@
 
 <template>
   <div class="bigDiv">
+    <input type="text" v-model="input" placeholder="Search fruits..." /><Icon icon="line-md:image-twotone" />
     <table class="table">
       <thead>
       <tr>
@@ -26,6 +27,7 @@
   </div>
 </template>
 <script>
+import { Icon } from '@iconify/vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default {
@@ -34,12 +36,20 @@ export default {
       items: [
         { id: 256300, name: 'Erwin Roberts', phone: '631-671-5755', city:'Bay Shore, NY 11706',lastvisit:'September 9, 2013'},
         { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
+        { id: 526801, name: 'Mary Anne Watson', phone: '516-800-6819', city:'Westbury NY 11590-4477',lastvisit:'August 2, 2013'},
         // Add more items as needed
       ]
     };
   },
   methods: {
     handleButtonClick(item) {
+
       console.log('Button clicked for item:', item);
     }
   }
@@ -48,9 +58,22 @@ export default {
 
 <style>
 .bigDiv{
-  padding-left: 111px;
-  text-align-all: center;
-  width: 75%;
+  width: 250%;
+  overflow-x: auto;
+}
+.table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th, .table td {
+
+  padding: 8px;
+}
+
+.table th {
+  font-weight: bold;
+}
+.table tbody tr:nth-child(even) {
 }
 /* You can add custom styling for the table here if needed */
 </style>

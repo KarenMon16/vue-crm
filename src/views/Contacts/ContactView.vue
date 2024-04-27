@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="bigDiv">
     <contact-information :contact="selectedContact" />
   </div>
 
@@ -7,9 +7,11 @@
 
 <script>
 import ContactInformation from '../../components/TheContact.vue';
+import App from "@/App.vue";
 
 export default {
   components: {
+    App,
     ContactInformation
   },
   data() {
@@ -18,15 +20,13 @@ export default {
         id: '256300',
         name: 'Erwin Roberts',
         phone: '631-671-5755',
-        job: 'Unknowm',
+        job: 'Unknown',
         marital: 'Married, Julia Smith',
         products:'Stove, paella, water filter',
         address:'17 Oakland Ave Bay Shore NY 11706-8006',
         description:'Mr. Erwin works from Monday to Friday, he’s married and Miss Julia is the one ' +
-            'who chooses what products to buy and he pays. She works too and can decide on her own, her days off ' +
-            'are on the weekend. Sometimes they go out on the weekends in the mornings and are back by the evening.' +
-            ' The address on file it’s their own house and they prefer the visits to be done only there.  ' +
-            'Their sales representative is Mr. Simon. Their products don’t require any maintenance and are ' +
+            'who chooses what products to buy and he pays. She works too and can decide on her own, her days off ' + 'are on the weekend. Sometimes they go out on the weekends in the mornings and are back by the evening.' +
+            ' The address on file it’s their own house and they prefer the visits to be done only there.  ' +'Their sales representative is Mr. Simon. Their products don’t require any maintenance and are ' +
             'satisfied with them. They are preferential clients and have received the $ 200 bonus before',
         lastvisit:'September 9, 2013. Ms. Julia received representative Simon on her day off. The representative ' +
             'was punctual but had to wait on the front door 30 minutes because she was running an errand before ' +
@@ -44,5 +44,8 @@ export default {
 </script>
 
 <style>
-/* Add global styles here */
+.bigDiv{
+  width: 250%;
+  overflow-x: auto;
+}
 </style>
