@@ -11,6 +11,7 @@
     "ag-grid-react": "^31.2.1",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
+    "http-server": "^14.1.1",
     "save": "^2.9.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"

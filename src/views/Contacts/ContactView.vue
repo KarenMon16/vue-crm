@@ -45,7 +45,7 @@ export default {
 
 <style>
 .bigDiv{
-  width: 250%;
+  width: 190%;
   overflow-x: auto;
 }
 </style>

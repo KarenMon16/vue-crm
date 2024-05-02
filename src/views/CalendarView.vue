@@ -1,11 +1,13 @@
 <script setup>
 
+import TheCalendar from "@/components/TheCalendar.vue";
 </script>
 
 <template>
-  <div>
+  <TheCalendar/>
+  <!--<div>
     <h1>This is a calendar page</h1>
-  </div>
+  </div>-->
 </template>
 
 <style scoped>

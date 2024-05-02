@@ -24,10 +24,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       <div class="side-menu-container">
         <ul class="nav navbar-nav">
           <li><RouterLink to="/">Home</RouterLink></li>
-          <li><RouterLink to="/about">About</RouterLink></li>
           <li><RouterLink to="/contacts">Contacts</RouterLink></li>
           <li><RouterLink to="/calendar">Calendar</RouterLink></li>
-          <li><RouterLink to="/contact">Single Contact</RouterLink></li>
 
           <!-- Dropdown-->
 
@@ -38,7 +36,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 </template>
 
 <style >
-
+.nav navbar-nav{
+  font-size: 16px;
+  padding-top: 100px;
+}
 .msb {
   width: 200px;
   background-color: #F5F7F9;
