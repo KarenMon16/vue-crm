@@ -1,6 +1,9 @@
-<script setup>
-
-import TheCalendar from "@/components/TheCalendar.vue";
+<script>
+import  VSimpleCalendar  from  '@romanran/vue-simple-calendar'
+import '@romanran/vue-simple-calendar/dist/vue-simple-calendar.css'
+export  default {
+  components: { VSimpleCalendar }
+}
 </script>
 
 <template>

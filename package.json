@@ -8,11 +8,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.6",
+    "@romanran/vue-simple-calendar": "^1.4.2",
     "ag-grid-react": "^31.2.1",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
+    "datatables.net-bs5": "^2.0.6",
+    "datatables.net-vue3": "^3.0.1",
+    "dayspan-vuetify": "^0.4.0",
     "http-server": "^14.1.1",
+    "primevue": "^3.52.0",
     "save": "^2.9.0",
+    "unplugin-vue-components": "^0.27.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
