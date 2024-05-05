@@ -12,8 +12,11 @@ const columns = [
   { data: 'phone' },
   { data: 'city' },
   { data: 'lastvisit' },
-  { data: 'salary' },
+  { render: function (data, type, row) {
+      return '<b-button variant="outline-primary" variant="outline-primary" onclick="handleButtonClick(' + row.id + ')">...</b-button>';
+    }}
 ];
+
 </script>
 
 <template>
@@ -24,7 +27,6 @@ const columns = [
         :columns="columns"
         ajax="/data.json"
         class="table table-hover table-striped"
-        width="100%"
     >
       <thead>
       <tr>
@@ -33,7 +35,7 @@ const columns = [
         <th>Phone</th>
         <th>City</th>
         <th>Last Visit</th>
-        <th>Salary</th>
+        <th>Option</th>
       </tr>
       </thead>
     </DataTable>
@@ -45,6 +47,6 @@ const columns = [
 @import 'datatables.net-bs5';
 
 .container{
-  width: 250%;
+  width: 300%;
 }
 </style>
