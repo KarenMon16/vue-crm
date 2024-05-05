@@ -13,10 +13,10 @@ const columns = [
   { data: 'city' },
   { data: 'lastvisit' },
   { render: function (data, type, row) {
-      return '<b-button variant="outline-primary" variant="outline-primary" onclick="handleButtonClick(' + row.id + ')">...</b-button>';
-    }}
+      return '<button @click="handleButtonClick(item)" class="btn btn-light">View more</button>';
+    }
+  }
 ];
-
 </script>
 
 <template>

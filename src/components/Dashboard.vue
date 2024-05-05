@@ -27,6 +27,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
           <li><RouterLink to="/contacts">Contacts</RouterLink></li>
           <li><RouterLink to="/calendar">Calendar</RouterLink></li>
 
+          <li><RouterLink to="/appt">Appointments</RouterLink></li>
           <!-- Dropdown-->
 
         </ul>

@@ -5,42 +5,34 @@
     <!-- Modal -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
-        <span class="close" @click="closeModal">&times;</span>
 
         <!-- Form fields -->
         <div class="form-group">
           <label>Name:</label>
-          <input type="text" v-model="formData.name">
+          <br/>
+          <input type="text" v-model="formData.name" class="form-control soft-border">
         </div>
         <div class="form-group">
-          <label>Address:</label>
-          <input type="text" v-model="formData.address">
+          <label>Address:</label><br/>
+          <input type="text" v-model="formData.address" class="form-control soft-border">
         </div>
         <div class="form-group">
-          <label>Phone:</label>
-          <input type="text" v-model="formData.phone">
+          <label>Phone:</label><br/>
+          <input type="text" v-model="formData.phone" class="form-control soft-border">
         </div>
         <div class="form-group">
-          <label>Job:</label>
-          <input type="text" v-model="formData.job">
+          <label>Description:</label><br/>
+          <textarea v-model="formData.description" class="form-control soft-border"></textarea>
         </div>
         <div class="form-group">
-          <label>Marital Status:</label>
-          <input type="text" v-model="formData.maritalStatus">
-        </div>
-        <div class="form-group">
-          <label>Description:</label>
-          <textarea v-model="formData.description"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Call Details:</label>
-          <textarea v-model="formData.callDetails"></textarea>
+          <label>Call Details:</label><br/>
+          <textarea v-model="formData.callDetails" class="form-control soft-border"></textarea>
         </div>
 
         <!-- Buttons -->
         <div class="modal-buttons">
-          <button @click="closeModal">Cancel</button>
-          <button @click="book">Book</button>
+          <button @click="closeModal" class="btn btn-light">Cancel</button>
+          <button @click="book" class="btn btn-light">Book </button>
         </div>
       </div>
     </div>
@@ -125,18 +117,4 @@ export default {
   cursor: pointer;
 }
 
-/* Form group styling */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-/* Modal buttons */
-.modal-buttons {
-  text-align: right;
-  margin-top: 1rem;
-}
-
-.modal-buttons button {
-  margin-left: 1rem;
-}
 </style>
