@@ -5,6 +5,7 @@
     <!-- Modal -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
+        <span class="close">New appointment</span>
 
         <!-- Form fields -->
         <div class="form-group">
@@ -32,7 +33,7 @@
         <!-- Buttons -->
         <div class="modal-buttons">
           <button @click="closeModal" class="btn btn-light">Cancel</button>
-          <button @click="book" class="btn btn-light">Book </button>
+          <button @click="book" class="btn btn-info">Book </button>
         </div>
       </div>
     </div>
@@ -87,9 +88,6 @@ export default {
 .modal {
   display: block;
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.4);
@@ -117,4 +115,18 @@ export default {
   cursor: pointer;
 }
 
+/* Form group styling */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.modal-buttons button {
+  margin-left: 1rem;
+}
 </style>
