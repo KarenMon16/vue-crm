@@ -52,12 +52,12 @@ export default {
       ]
     };
   },
-methods: {
-  handleButtonClick(item) {
-    this.$router.push('/contact');
-    console.log('Button clicked for item:', item);
+  methods: {
+    handleButtonClick(item) {
+      this.$router.push('/contact');
+      console.log('Button clicked for item:', item);
+    }
   }
-}
 };
 </script>
 

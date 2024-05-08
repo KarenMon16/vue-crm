@@ -24,9 +24,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       <div class="side-menu-container">
         <ul class="nav navbar-nav">
           <li><RouterLink to="/">Home</RouterLink></li>
+          <li><RouterLink to="/campaings">Campaings</RouterLink></li>
           <li><RouterLink to="/contacts">Contacts</RouterLink></li>
           <li><RouterLink to="/calendar">Calendar</RouterLink></li>
-
           <li><RouterLink to="/appt">Appointments</RouterLink></li>
           <!-- Dropdown-->
 

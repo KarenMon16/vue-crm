@@ -5,6 +5,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/campaings',
+      name: 'campaings',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/MainView.vue')
     },
     {
       path: '/contacts',
@@ -12,7 +18,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Contacts.vue')
+      component: () => import('../views/ContactListView.vue')
     },
     {
       path: '/contactsx',

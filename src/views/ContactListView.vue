@@ -5,15 +5,16 @@ import DataTablesCore from 'datatables.net-bs5';
 import { Icon } from '@iconify/vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 DataTable.use(DataTablesCore);
+import { useRouter } from 'vue-router';
 
 const columns = [
   { data: 'id' },
   { data: 'name' },
   { data: 'phone' },
   { data: 'city' },
-  { data: 'lastvisit' },
-  { render: function (data, type, row) {
-      return '<button @click="handleButtonClick(item)" class="btn btn-light">View more</button>';
+  { data: 'lastvisit' },  {
+    render: function (data, type, row) {
+      return '<button @click="handleButtonClick(item)" class="btn btn-light">...</button>';
     }
   }
 ];
