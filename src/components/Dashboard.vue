@@ -2,6 +2,10 @@
 
 import {RouterLink} from "vue-router";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import IconHome from "@/components/icons/IconHome.vue";
+import IconCampaigns from "@/components/icons/IconCampaigns.vue";
+import IconContacts from "@/components/icons/IconContacts.vue";
+import IconCalendar from "@/components/icons/IconCalendar.vue";
 </script>
 
 <template>
@@ -12,10 +16,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       <div class="navbar-header">
         <div class="brand-wrapper">
           <!-- Brand -->
-          <div class="brand-name-wrapper">
-            <a class="navbar-brand">
+          <div class="brand-name-wrapper"><i class="bi bi-house"></i>
+            <div class="navbar-brand" style="align-content: center">
               Dashboard
-            </a>
+            </div>
           </div>
 
         </div>
@@ -23,11 +27,36 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       <!-- Main Menu -->
       <div class="side-menu-container">
         <ul class="nav navbar-nav">
-          <li><RouterLink to="/">Home</RouterLink></li>
-          <li><RouterLink to="/campaings">Campaings</RouterLink></li>
-          <li><RouterLink to="/contacts">Contacts</RouterLink></li>
-          <li><RouterLink to="/calendar">Calendar</RouterLink></li>
-          <li><RouterLink to="/appt">Appointments</RouterLink></li>
+
+          <li><RouterLink to="/">
+            <span data-inline="false">
+            <IconHome/>
+            </span>
+            Home</RouterLink>
+          </li>
+          <li><RouterLink to="/campaings">
+            <span data-inline="false">
+            <IconCampaigns/>
+            </span>
+            Campaings</RouterLink>
+          </li>
+          <li><RouterLink to="/contacts">
+            <span data-inline="false">
+            <IconContacts/>
+            </span>
+            Contacts</RouterLink>
+          </li>
+          <li><RouterLink to="/calendar">
+            <span data-inline="false">
+            <IconCalendar/>
+            </span>
+            Calendar</RouterLink></li>
+          <li><RouterLink to="/appt">
+            <span data-inline="false">
+            <IconContacts/>
+            </span>
+            Appointments</RouterLink>
+          </li>
           <!-- Dropdown-->
 
         </ul>
@@ -38,11 +67,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 <style >
 .nav navbar-nav{
-  font-size: 16px;
+  width: 500px;
+  font-size: 30px;
   padding-top: 100px;
 }
 .msb {
-  width: 200px;
+
+  text-decoration: none;
+  align-content: space-between;
+  width: 250px;
   background-color: #F5F7F9;
   position: fixed;
   left: 0;
@@ -134,5 +167,7 @@ ul.ns {
   }
 
 }
-
+.navbar-brand{
+  align-content: center;
+}
 </style>

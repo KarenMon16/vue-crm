@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import DataTable from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
-
-import { Icon } from '@iconify/vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios"
 DataTable.use(DataTablesCore);
-import { useRouter } from 'vue-router';
 
 const columns = [
   { data: 'id' },
@@ -18,11 +16,12 @@ const columns = [
     }
   }
 ];
+
 </script>
 
 <template>
   <div class="container">
-    <h1>New York Campaing</h1>
+    <h1>Royal Prestige New York SR</h1>
 
     <DataTable
         :columns="columns"

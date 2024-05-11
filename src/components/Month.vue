@@ -41,7 +41,12 @@ const loadEvents = () => {
       id: 1,
       start: DayPilot.Date.today(),
       end: DayPilot.Date.today().addDays(1),
-      text: "Event 1"
+      text: "Cintia Soliz"
+    },    {
+      id: 1,
+      start: DayPilot.Date.today(),
+      end: DayPilot.Date.today().addDays(1),
+      text: "Marco Lin"
     }
   ];
   config.events = events;

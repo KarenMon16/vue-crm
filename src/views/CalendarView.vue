@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="top-div">
-      <a>Top Div</a>
+      <h1 style="font-weight: bold"> Royal Prestige New York SR </h1>
     </div>
     <div class="bottom-div">
-      Bottom Div
+      Citas agendadas
       <Month/>
     </div>
   </div>
