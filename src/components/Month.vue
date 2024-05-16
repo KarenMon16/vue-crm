@@ -22,7 +22,7 @@ const config = reactive({
       text: modal.result
     });
   },
-  eventDeleteHandling: "Disabled",
+  eventDeleteHandling: "Enabled",
   eventMoveHandling: "Update",
   onEventMoved: (args) => {
     console.log("Event moved: " + args.e.text());
@@ -31,28 +31,30 @@ const config = reactive({
   onEventResized: (args) => {
     console.log("Event resized: " + args.e.text());
   },
-  eventClickHandling: "Disabled",
+  eventClickHandling: "Enabled",
 });
 const monthRef = ref(null);
-
-const loadEvents = () => {
-  const events = [
-    {
-      id: 1,
-      start: DayPilot.Date.today(),
-      end: DayPilot.Date.today().addDays(1),
-      text: "Cintia Soliz"
-    },    {
-      id: 1,
-      start: DayPilot.Date.today(),
-      end: DayPilot.Date.today().addDays(1),
-      text: "Marco Lin"
-    }
-  ];
-  config.events = events;
-};
-
 onMounted(() => {
   loadEvents();
 });
+const loadEvents = async () => {
+  try {
+    // Make HTTP GET request to fetch events from backend
+    const response = await fetch('http://localhost:8080/appointments/all');
+    if (!response.ok) {
+      throw new Error('Failed to fetch events');
+    }
+    // Parse response JSON
+    const events = await response.json();
+    // Update events in the calendar
+    config.events = events.map(event => ({
+      id: event.id,
+      start: new DayPilot.Date(event.ts_visit),
+      end: new DayPilot.Date(event.ts_visit),
+      text: event.id_appt
+    }));
+  } catch (error) {
+    console.error('Error loading events:', error);
+  }
+};
 </script>

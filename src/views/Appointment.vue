@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="openModal">Open Modal</button>
+    <button @click="openModal" class="btn btn-success">Book Appointment</button>
 
     <!-- Modal -->
     <div v-if="showModal" class="modal">
@@ -46,11 +46,11 @@ export default {
     return {
       showModal: false,
       formData: {
-        name: '',
-        address: '',
-        phone: '',
-        job: '',
-        maritalStatus: '',
+        name: 'Erwin Roberts',
+        address: '17 Oakland Ave Bay Shore NY 11706-8006',
+        phone: '631-671-5755',
+        job: 'Unknown',
+        maritalStatus: 'Married, Julia Smith',
         description: '',
         callDetails: ''
       }

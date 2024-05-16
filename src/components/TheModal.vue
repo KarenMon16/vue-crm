@@ -1,7 +1,5 @@
 <template>
   <div>
-    <button @click="openModal">Open Modal</button>
-
     <!-- Modal -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">

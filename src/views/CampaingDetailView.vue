@@ -2,19 +2,16 @@
 import DataTable from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios"
-DataTable.use(DataTablesCore);
-const id_seller=1;
+import { useRouter } from 'vue-router';
 
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp);
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const month = monthNames[date.getMonth()];
-  const day = date.getDate();
-  const year = date.getFullYear();
-  return `${month} ${day}, ${year}`;
+DataTable.use(DataTablesCore);
+const id_seller = 1;
+const router = useRouter();
+
+const back = () => {
+  router.push('/campaigns');
 };
+
 const columns = [
   { data: 'id' },
   { data: 'name' },
@@ -24,12 +21,11 @@ const columns = [
   { data: 'last_call' },
   { data: 'last_visit' },
   {
-    render: function (data, type, row) {
-      return '<button class="btn btn-light">...</button>';
+    render: () => {
+      return '<button class="btn btn-info" @click="back">Back</button>';
     }
   }
 ];
-
 </script>
 
 <template>
@@ -39,8 +35,8 @@ const columns = [
     <DataTable
         :columns="columns"
         :ajax="{
-          url: 'http://localhost:8080/contacts/seller?id='+id_seller, // URL to fetch data from backend
-          dataSrc: '' // If the data source is not nested in an object, set it to empty string
+          url: 'http://localhost:8080/contacts/seller?id='+id_seller,
+          dataSrc: ''
         }"
         class="table table-hover table-striped"
     >

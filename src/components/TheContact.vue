@@ -45,7 +45,11 @@
 
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TheModal from './TheModal.vue'; // Example path to your modal component
 export default {
+  components: {
+    TheModal
+  },
   props: {
     contact: {
       type: Object,
@@ -55,21 +59,32 @@ export default {
   data() {
     return {
       editing: false,
-      editedContact: { ...this.contact }
+      editedContact: { ...this.contact },
+
+      showModal: false
     };
   },
   methods: {
+    back() {
+      this.$router.push('/contacts');
+    },
     toggleEdit() {
       this.editedContact = { ...this.contact };
       this.editing = true;
     },
     saveChanges() {
-      this.$router.push('/contacts');
-      this.$emit('update-contact', this.editedContact);
-      this.editing = false;
+      // Ask the user if they made an appointment
+      const confirmed = confirm("Did you make an appointment?");
+      if (confirmed) {
+        // If yes, open the modal
+        this.$router.push('/appt');
+      } else {
+        // If no, redirect to "contacts" view
+        this.$router.push('/contacts');
+      }
     },
-    cancelEdit() {
-      this.editing = false;
+    closeModal() {
+      this.showModal = false;
     }
   }
 };

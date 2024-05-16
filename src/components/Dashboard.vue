@@ -9,25 +9,12 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
 </script>
 
 <template>
-
   <div class="msb" id="msb">
-    <nav class="navbar navbar-default" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <div class="brand-wrapper">
-          <!-- Brand -->
-          <div class="brand-name-wrapper"><i class="bi bi-house"></i>
-            <div class="navbar-brand" style="align-content: center">
-              Dashboard
-            </div>
-          </div>
-
-        </div>
-      </div>
+    <nav class="container-md">
       <!-- Main Menu -->
       <div class="side-menu-container">
         <ul class="nav navbar-nav">
-
+          <li>Dashboard</li>
           <li><RouterLink to="/">
             <span data-inline="false">
             <IconHome/>
@@ -57,25 +44,18 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
             </span>
             Appointments</RouterLink>
           </li>
-          <!-- Dropdown-->
 
         </ul>
-      </div><!-- /.navbar-collapse -->
+      </div>
     </nav>
   </div>
 </template>
 
-<style >
-.nav navbar-nav{
-  width: 500px;
-  font-size: 30px;
-  padding-top: 100px;
-}
+<style scoped>
 .msb {
-
   text-decoration: none;
   align-content: space-between;
-  width: 250px;
+  width: 100%;
   background-color: #F5F7F9;
   position: fixed;
   left: 0;
@@ -87,87 +67,32 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
   height: 100%;
   z-index: 1;
   border-right: 1px solid #ddd;
-  .navbar {
-    border: none;
-    margin-left: 0;
-    background-color: inherit;
-  }
-  .navbar-header {
-    width: 100%;
-    border-bottom: 1px solid #e7e7e7;
-    margin-bottom: 20px;
-    background: #fff;
-  }
-  .navbar-nav {
-    .panel {
-      border: 0 none;
-      box-shadow: none;
-      margin: 0;
-      background: inherit;
-    }
-    li {
-      padding: 15%;
-      display: block;
-      width: 100%;
-      a {
-        padding: 15px;
-        color: #5f5f5f;
-        .glyphicon, .fa {
-          margin-right: 8px;
-        }
-      }
-    }
-  }
-  .nb {
-    padding-top: 5px;
-    padding-left: 10px;
-    margin-bottom: 30px;
-    overflow: hidden;
+}
+.brand-name-wrapper i {
+  margin-right: 5px;
+}
 
+.navbar-nav {
+  width: 100%;
+  font-size: 20px;
+  padding-top: 20px;
+}
+
+.navbar-nav li {
+  padding: 20px;
+}
+
+.navbar-nav a {
+  color: #5f5f5f;
+}
+
+@media (min-width: 768px) {
+  .msb {
+    width: 250px;
   }
 }
-ul.nv,
-ul.ns {
-  position: relative;
-  padding: 0;
-  list-style: none;
-}
-.nv {
-  li {
-    display: block;
-    position: relative;
-
-    &::before {
-      clear: both;
-      content: "";
-      display: table;
-    }
-    a {
-      color: #444;
-      padding: 10px 25px;
-      display: block;
-      vertical-align: middle;
-
-      .ic {
-        font-size: 16px;
-        margin-right: 5px;
-        font-weight: 300;
-        display: inline-block;
-      }
-    }
-  }
-  /*ns: nav-sub*/
-  .ns {
-    li {
-      a {
-        padding: 10px 50px;
-      }
-    }
-
-  }
-
-}
-.navbar-brand{
-  align-content: center;
+.side-menu-container{
+  padding-top: 35%;
+  padding-left: 15%;
 }
 </style>
