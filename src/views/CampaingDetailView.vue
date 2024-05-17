@@ -1,65 +1,59 @@
-<script setup lang="ts">
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net-bs5';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useRouter } from 'vue-router';
-
-DataTable.use(DataTablesCore);
-const id_seller = 1;
-const router = useRouter();
-
-const back = () => {
-  router.push('/campaigns');
-};
-
-const columns = [
-  { data: 'id' },
-  { data: 'name' },
-  { data: 'city' },
-  { data: 'job' },
-  { data: 'civil' },
-  { data: 'last_call' },
-  { data: 'last_visit' },
-  {
-    render: () => {
-      return '<button class="btn btn-info" @click="back">Back</button>';
-    }
-  }
-];
-</script>
-
 <template>
-  <div class="container">
-    <h1>Royal Prestige New York SR</h1>
-
-    <DataTable
-        :columns="columns"
-        :ajax="{
-          url: 'http://localhost:8080/contacts/seller?id='+id_seller,
-          dataSrc: ''
-        }"
-        class="table table-hover table-striped"
-    >
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-        <th>Civil Status</th>
-        <th>Job</th>
-        <th>Last Call</th>
-        <th>Last Visit</th>
-        <th>Option</th>
-      </tr>
-      </thead>
-    </DataTable>
+  <div>
+    <h2>Royal Prestige New York SR</h2>
+    <br>
+    <h4>Description</h4>
+    <p>Representative Simon Romero from Royal Prestige is based in NY, available from 8:00 AM to 5:00 PM EST and able to drive to any city in NY</p>
+    <br>
+    <h4>Scripts</h4>
+    <TheSpeech v-for="(speech, index) in speeches" :key="index" :description="speech.title" :speech="speech.speech" />
+  </div>
+  <div class="back-button-container">
+    <button class="btn btn-info" @click="back">Back</button>
   </div>
 </template>
 
-<style>
-@import 'datatables.net-bs5';
+<script>
+import axios from 'axios'; // Import axios for HTTP requests
+import TheSpeech from '@/components/TheSpeech.vue';
 
-.container {
-  width: 300%;
+export default {
+  components: {
+    TheSpeech
+  },
+  data() {
+    return {
+      speeches: [] // Initialize speeches array to store data from backend
+    }
+  },
+  created() {
+    // Fetch data from backend when the component is created
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      // Make HTTP request to fetch data from backend
+      axios.get('http://localhost:8080/speeches/all')
+          .then(response => {
+            // Process the response data as per your requirements
+            this.speeches = response.data;
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+    },
+    back() {
+      // Redirect to /campaigns route
+      this.$router.push('/campaings');
+    }
+  }
+}
+</script>
+
+<style scoped>
+.back-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 550px;
 }
 </style>

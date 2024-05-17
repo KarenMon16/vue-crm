@@ -36,7 +36,7 @@ const router = createRouter({
       component: () => import('../views/CalendarView.vue')
     },
     {
-      path: '/contact',
+      path: '/contact/:id',
       name: 'contact',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
