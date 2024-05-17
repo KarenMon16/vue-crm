@@ -40,8 +40,7 @@ export default defineComponent({
   },
   methods: {
     details(id) {
-      alert("details "+id);
-      this.$router.push({ name: 'ContactDetails', params: { id: id } });
+      this.$router.push('/contact/' + id);
     }
   },
   mounted() {
