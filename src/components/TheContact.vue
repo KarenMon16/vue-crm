@@ -4,13 +4,12 @@
     <div v-if="!editing" class="table">
       <p><strong>ID:</strong> {{ contact.id }}</p>
       <p><strong>Name:</strong> {{ contact.name }}</p>
+      <p><strong>Address:</strong> {{ contact.address }}</p>
       <p><strong>Phone:</strong> {{ contact.phone }}</p>
       <p><strong>Job:</strong> {{ contact.job }}</p>
-      <p><strong>Marital Status:</strong> {{ contact.marital }} </p>
-      <p><strong>Address:</strong> {{ contact.address }}</p>
-      <p><strong>Description:</strong> {{ contact.description }}</p>
-      <p><strong>Last Visit:</strong> {{ contact.lastvisit }}</p>
-      <p><strong>Last Call:</strong> {{ contact.lastcall }}</p>
+      <p><strong>Marital Status:</strong> {{ contact.civil }} </p>
+      <p><strong>Last Visit:</strong> {{ contact.last_visit }}</p>
+      <p><strong>Last Call:</strong> {{ contact.last_call }}</p>
       <div class="buttons">
         <button @click="back" class="btn btn-light">Back</button>
         <button @click="toggleEdit" class="btn btn-info">Edit</button>

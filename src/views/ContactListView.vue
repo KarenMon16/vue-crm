@@ -39,12 +39,9 @@ export default defineComponent({
     };
   },
   methods: {
-    back() {
-      this.$router.push('/campaigns');
-    },
     details(id) {
-      alert("details");
-      this.$router.push('/contact/' + id);
+      alert("details "+id);
+      this.$router.push({ name: 'ContactDetails', params: { id: id } });
     }
   },
   mounted() {
