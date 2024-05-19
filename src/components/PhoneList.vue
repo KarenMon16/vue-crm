@@ -3,7 +3,7 @@
     <h2>Phone Numbers</h2>
     <div v-for="phone in phones" :key="phone.id" class="phone-card">
       <p><strong>Number:</strong> {{ phone.number }}</p>
-      <p><strong>Description:</strong> {{ phone.description }}</p>
+      <p><strong>Description:</strong> {{ phone.type }}</p>
       <button @click="editPhone(phone)" class="btn-primary">Edit</button>
     </div>
     <button @click="addNewPhone" class="btn-secondary">Add New Phone</button>
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
           <label>Description:</label>
-          <input type="text" v-model="currentPhone.description" class="form-control">
+          <input type="text" v-model="currentPhone.type" class="form-control">
         </div>
         <div class="button-group">
           <button @click="savePhone" class="btn-primary">Save</button>
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     fetchPhones() {
-      axios.get(`http://localhost:8080/person/${this.contactId}/phones`)
+      axios.get(`http://localhost:8080/phone/all?id=${this.contactId}`)
           .then(response => {
             this.phones = response.data;
           })
@@ -66,13 +66,13 @@ export default {
       this.addingPhone = false;
     },
     addNewPhone() {
-      this.currentPhone = { id: null, number: '', description: '' };
+      this.currentPhone = { id: null,id_contact: this.contactId, number: '', description: '' };
       this.editingPhone = false;
       this.addingPhone = true;
     },
     savePhone() {
       if (this.editingPhone) {
-        axios.put(`http://localhost:8080/phones/${this.currentPhone.id}`, this.currentPhone)
+        axios.put(`http://localhost:8080/phone/${this.currentPhone.id}`, this.currentPhone)
             .then(response => {
               this.fetchPhones();
               this.editingPhone = false;
@@ -81,7 +81,7 @@ export default {
               console.error("There was an error updating the phone:", error);
             });
       } else if (this.addingPhone) {
-        axios.post('http://localhost:8080/phones', { ...this.currentPhone, contact_id: this.contactId })
+        axios.post('http://localhost:8080/phone', { ...this.currentPhone, contact_id: this.contactId })
             .then(response => {
               this.fetchPhones();
               this.addingPhone = false;

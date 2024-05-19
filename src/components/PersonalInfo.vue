@@ -15,12 +15,12 @@
         <input type="text" v-model="currentPerson.city" class="form-control">
       </div>
       <div class="form-group">
-        <label>Marital Status:</label>
-        <input type="text" v-model="currentPerson.civil" class="form-control">
+        <label>Civil Status :</label>
+        <input type="text" v-model="currentPerson.job" class="form-control">
       </div>
       <div class="form-group">
         <label>Job:</label>
-        <input type="text" v-model="currentPerson.job" class="form-control">
+        <input type="text" v-model="currentPerson.civil" class="form-control">
       </div>
       <div class="button-group">
         <button @click="savePerson" class="btn-primary">Save</button>
@@ -31,8 +31,8 @@
       <p><strong>ID:</strong> {{ person.id }}</p>
       <p><strong>Name:</strong> {{ person.name }}</p>
       <p><strong>City:</strong> {{ person.city }}</p>
-      <p><strong>Marital Status:</strong> {{ person.civil }}</p>
       <p><strong>Job:</strong> {{ person.job }}</p>
+      <p><strong>Civil Status:</strong> {{ person.civil }}</p>
       <button @click="editPerson" class="btn-primary">Edit</button>
     </div>
   </div>
