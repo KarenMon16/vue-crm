@@ -1,13 +1,21 @@
 <template>
+  <h2>Addresses</h2>
+  <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
+  <br>
   <div class="address-section">
-    <h2>Addresses</h2>
-    <div v-for="address in addresses" :key="address.id" class="address-card">
-      <p><strong>Address:</strong> {{ address.address }}</p>
-      <p><strong>Zip Code:</strong> {{ address.zip_code }}</p>
-      <p><strong>Type:</strong> {{ address.type }}</p>
-      <button @click="editAddress(address)" class="btn-primary">Edit</button>
+    <div class="address-section">
+      <div v-for="address in addresses" :key="address.id" class="address-card">
+        <div class="address-info">
+          <p><strong>Address:</strong> {{ address.address }}</p>
+          <p><strong>Zip Code:</strong> {{ address.zip_code }}</p>
+          <p><strong>Type:</strong> {{ address.type }}</p>
+        </div>
+        <div class="button-group">
+          <button @click="editAddress(address)" class="btn-primary">Edit</button>
+          <button @click="deleteAddress(address.id)" class="btn-secondary">Delete</button>
+        </div>
+      </div>
     </div>
-    <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
 
     <!-- Address Form Modal -->
     <div v-if="editingAddress || addingAddress" class="modal">
@@ -111,6 +119,17 @@ export default {
     cancelEditAddress() {
       this.editingAddress = false;
       this.addingAddress = false;
+    },
+    deleteAddress(id) {
+      if (confirm("Are you sure you want to delete this address?")) {
+        axios.delete(`http://localhost:8080/addresses?id=`+id)
+            .then(() => {
+              this.fetchAddresses();
+            })
+            .catch(error => {
+              console.error("There was an error deleting the address:", error);
+            });
+      }
     }
   }
 };
@@ -118,27 +137,22 @@ export default {
 
 <style scoped>
 .address-section {
-  margin-bottom: 20px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 10px;
 }
 
 h2 {
   font-size: 24px;
-  color: #333;
-  text-align: center;
   margin-bottom: 20px;
 }
-
 .address-card {
   border: 1px solid #ddd;
-  padding: 15px;
   border-radius: 4px;
-  margin-bottom: 10px;
 }
-
+.address-info {
+  padding: 10px;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -179,8 +193,12 @@ h2 {
 .button-group {
   display: flex;
   justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #ddd;
 }
-
+.button-group button {
+  flex: 1;
+}
 .btn-primary, .btn-secondary {
   padding: 10px 20px;
   border: none;
@@ -189,7 +207,7 @@ h2 {
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: #333;
   color: white;
 }
 

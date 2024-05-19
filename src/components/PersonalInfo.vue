@@ -3,6 +3,10 @@
     <h2>Personal Info</h2>
     <div v-if="editing" class="info-edit">
       <div class="form-group">
+        <label>ID:</label>
+        <input type="text" v-model="currentPerson.id" class="form-control" readonly>
+      </div>
+      <div class="form-group">
         <label>Name:</label>
         <input type="text" v-model="currentPerson.name" class="form-control">
       </div>
@@ -52,13 +56,14 @@ export default {
   },
   methods: {
     editPerson() {
-      this.currentPerson = { ...this.person };
+      this.currentPerson = {...this.person};
       this.editing = true;
     },
     savePerson() {
-      axios.put(`http://localhost:8080/person/${this.person.id}`, this.currentPerson)
+      axios.put(`http://localhost:8080/contacts/${this.person.id}`, this.currentPerson)
           .then(response => {
-            this.$emit('update-person', response.data);
+            // Update the person object directly to reflect changes immediately
+            Object.assign(this.person, response.data);
             this.editing = false;
           })
           .catch(error => {
