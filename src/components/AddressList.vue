@@ -4,7 +4,7 @@
     <div v-for="address in addresses" :key="address.id" class="address-card">
       <p><strong>Address:</strong> {{ address.address }}</p>
       <p><strong>Zip Code:</strong> {{ address.zip_code }}</p>
-      <p><strong>Description:</strong> {{ address.description }}</p>
+      <p><strong>Type:</strong> {{ address.type }}</p>
       <button @click="editAddress(address)" class="btn-primary">Edit</button>
     </div>
     <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
@@ -22,8 +22,8 @@
           <input type="text" v-model="currentAddress.zip_code" class="form-control">
         </div>
         <div class="form-group">
-          <label>Description:</label>
-          <input type="text" v-model="currentAddress.description" class="form-control">
+          <label>Type:</label>
+          <input type="text" v-model="currentAddress.type" class="form-control">
         </div>
         <div class="button-group">
           <button @click="saveAddress" class="btn-primary">Save</button>
@@ -49,7 +49,7 @@ export default {
       addresses: [],
       editingAddress: false,
       addingAddress: false,
-      currentAddress: {id: null, address: '', zip_code: '', description: ''}
+      currentAddress: { id: null, address: '', zip_code: '', type: '' }
     };
   },
   created() {
@@ -66,18 +66,28 @@ export default {
           });
     },
     editAddress(address) {
-      this.currentAddress = {...address};
+      this.currentAddress = { ...address };
       this.editingAddress = true;
       this.addingAddress = false;
     },
     addNewAddress() {
-      this.currentAddress = {id: this.contactId, address: '', zip_code: '', description: ''};
+      this.currentAddress = { id: null, id_contact: this.contactId,address: '', zip_code: '',type: '' };
       this.editingAddress = false;
       this.addingAddress = true;
     },
     saveAddress() {
+      const payload = {
+        ...this.currentAddress,
+        contact_id: this.contactId,
+      };
+
+      // Ensure id is an integer or null
+      if (payload.id !== null) {
+        payload.id = parseInt(payload.id, 10);
+      }
+
       if (this.editingAddress) {
-        axios.put(`http://localhost:8080/addresses`, this.currentAddress)
+        axios.put(`http://localhost:8080/addresses/${payload.id}`, payload)
             .then(() => {
               this.fetchAddresses();
               this.editingAddress = false;
@@ -86,7 +96,9 @@ export default {
               console.error("There was an error updating the address:", error);
             });
       } else if (this.addingAddress) {
-        axios.post('http://localhost:8080/addresses', {...this.currentAddress, contact_id: this.contactId})
+        // Remove id from payload when adding a new address
+        delete payload.id;
+        axios.post('http://localhost:8080/addresses', payload)
             .then(() => {
               this.fetchAddresses();
               this.addingAddress = false;
