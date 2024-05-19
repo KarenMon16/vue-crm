@@ -36,6 +36,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from 'axios';
 
@@ -126,7 +127,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .phone-section {
   padding: 20px;
