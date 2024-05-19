@@ -1,6 +1,9 @@
 <template>
   <div class="bigDiv">
-    <contact-information :contact="selectedContact" />
+    <!--<contact-information :contact="selectedContact" />-->
+    <PersonalInfo :person="selectedContact"/>
+    <AddressList :contact-id="id"/>
+    <PhoneList :contact-id="id"/>
   </div>
 
 </template>
@@ -9,9 +12,15 @@
 import axios from 'axios';
 import ContactInformation from '@/components/TheContact.vue';
 import App from "@/App.vue";
+import PersonalInfo from "@/components/PersonalInfo.vue";
+import AddressList from "@/components/AddressList.vue";
+import PhoneList from "@/components/PhoneList.vue";
 
 export default {
   components: {
+    PhoneList,
+    AddressList,
+    PersonalInfo,
     App,
     ContactInformation
   },

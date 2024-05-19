@@ -27,7 +27,7 @@ export default defineComponent({
         }
       }
     ]);
-
+//    axios.get(`http://localhost:8080/contacts?id=${this.id}`)
     const ajax = {
       url: `http://localhost:8080/contacts/seller?id=${id_seller}`,
       dataSrc: ''
