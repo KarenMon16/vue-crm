@@ -1,9 +1,8 @@
 <template>
-  <h2>Addresses</h2>
-  <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
-  <br>
   <div class="address-section">
-    <div class="address-section">
+    <h2>Addresses</h2>
+    <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
+    <div class="address-list">
       <div v-for="address in addresses" :key="address.id" class="address-card">
         <div class="address-info">
           <p><strong>Address:</strong> {{ address.address }}</p>
@@ -74,12 +73,12 @@ export default {
           });
     },
     editAddress(address) {
-      this.currentAddress = { ...address };
+      this.currentAddress = {...address};
       this.editingAddress = true;
       this.addingAddress = false;
     },
     addNewAddress() {
-      this.currentAddress = { id: null, id_contact: this.contactId,address: '', zip_code: '',type: '' };
+      this.currentAddress = {id: null, contact_id: this.contactId, address: '', zip_code: '', type: ''};
       this.editingAddress = false;
       this.addingAddress = true;
     },
@@ -122,7 +121,7 @@ export default {
     },
     deleteAddress(id) {
       if (confirm("Are you sure you want to delete this address?")) {
-        axios.delete(`http://localhost:8080/addresses?id=`+id)
+        axios.delete(`http://localhost:8080/addresses?id=` + id)
             .then(() => {
               this.fetchAddresses();
             })
@@ -137,22 +136,66 @@ export default {
 
 <style scoped>
 .address-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 10px;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 h2 {
   font-size: 24px;
+  text-align: center;
   margin-bottom: 20px;
+  color: #333;
 }
+
+.address-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
 .address-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .address-info {
-  padding: 10px;
+  margin-bottom: 10px;
 }
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -166,10 +209,10 @@ h2 {
 }
 
 .modal-content {
-  background: #fff;
+  background: white;
   padding: 20px;
-  border-radius: 4px;
-  max-width: 500px;
+  border-radius: 8px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -188,31 +231,5 @@ h2 {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-}
-.button-group button {
-  flex: 1;
-}
-.btn-primary, .btn-secondary {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #333;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
 }
 </style>

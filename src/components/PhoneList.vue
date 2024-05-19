@@ -1,12 +1,19 @@
 <template>
   <div class="phone-section">
     <h2>Phone Numbers</h2>
-    <div v-for="phone in phones" :key="phone.id" class="phone-card">
-      <p><strong>Number:</strong> {{ phone.number }}</p>
-      <p><strong>Description:</strong> {{ phone.type }}</p>
-      <button @click="editPhone(phone)" class="btn-primary">Edit</button>
-    </div>
     <button @click="addNewPhone" class="btn-secondary">Add New Phone</button>
+    <div class="phone-list">
+      <div v-for="phone in phones" :key="phone.id" class="phone-card">
+        <div class="phone-info">
+          <p><strong>Number:</strong> {{ phone.number }}</p>
+          <p><strong>Description:</strong> {{ phone.type }}</p>
+        </div>
+        <div class="button-group">
+          <button @click="editPhone(phone)" class="btn-primary">Edit</button>
+          <button @click="deletePhone(phone.id)" class="btn-secondary">Delete</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Phone Form Modal -->
     <div v-if="editingPhone || addingPhone" class="modal">
@@ -44,7 +51,7 @@ export default {
       phones: [],
       editingPhone: false,
       addingPhone: false,
-      currentPhone: { id: null, number: '', description: '' }
+      currentPhone: { id: null, number: '', type: '' }
     };
   },
   created() {
@@ -66,14 +73,23 @@ export default {
       this.addingPhone = false;
     },
     addNewPhone() {
-      this.currentPhone = { id: null,id_contact: this.contactId, number: '', description: '' };
+      this.currentPhone = {id: null, id_contact: this.contactId, number: '', type: '' };
       this.editingPhone = false;
       this.addingPhone = true;
     },
     savePhone() {
+      const payload = {
+        ...this.currentPhone,
+        contact_id: this.contactId,
+      };
+
+      if (payload.id !== null) {
+        payload.id = parseInt(payload.id, 10);
+      }
+
       if (this.editingPhone) {
-        axios.put(`http://localhost:8080/phone/${this.currentPhone.id}`, this.currentPhone)
-            .then(response => {
+        axios.put(`http://localhost:8080/phone/${payload.id}`, payload)
+            .then(() => {
               this.fetchPhones();
               this.editingPhone = false;
             })
@@ -81,8 +97,9 @@ export default {
               console.error("There was an error updating the phone:", error);
             });
       } else if (this.addingPhone) {
-        axios.post('http://localhost:8080/phone', { ...this.currentPhone, contact_id: this.contactId })
-            .then(response => {
+        delete payload.id;
+        axios.post('http://localhost:8080/phone', payload)
+            .then(() => {
               this.fetchPhones();
               this.addingPhone = false;
             })
@@ -94,6 +111,17 @@ export default {
     cancelEditPhone() {
       this.editingPhone = false;
       this.addingPhone = false;
+    },
+    deletePhone(id) {
+      if (confirm("Are you sure you want to delete this phone number?")) {
+        axios.delete(`http://localhost:8080/phone?id=${id}`)
+            .then(() => {
+              this.fetchPhones();
+            })
+            .catch(error => {
+              console.error("There was an error deleting the phone number:", error);
+            });
+      }
     }
   }
 };
@@ -101,25 +129,64 @@ export default {
 
 <style scoped>
 .phone-section {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h2 {
+  font-size: 24px;
+  text-align: center;
   margin-bottom: 20px;
-  background: #fff;
+  color: #333;
+}
+
+.phone-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.phone-card {
+  background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  font-size: 24px;
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
+.phone-info {
+  margin-bottom: 10px;
 }
 
-.phone-card {
-  border: 1px solid #ddd;
-  padding: 15px;
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
   border-radius: 4px;
-  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
 .modal {
@@ -135,10 +202,10 @@ h2 {
 }
 
 .modal-content {
-  background: #fff;
+  background: white;
   padding: 20px;
-  border-radius: 4px;
-  max-width: 500px;
+  border-radius: 8px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -157,27 +224,5 @@ h2 {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn-primary, .btn-secondary {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
 }
 </style>
