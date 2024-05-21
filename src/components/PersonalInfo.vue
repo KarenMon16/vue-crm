@@ -1,7 +1,8 @@
 <template>
   <div class="info-section">
     <h2>Personal Info</h2>
-    <div v-if="editing" class="info-edit">
+
+    <div v-if="editing" class="info-edit" >
       <div class="form-group">
         <label>ID:</label>
         <input type="text" v-model="currentPerson.id" class="form-control" readonly>
@@ -23,8 +24,12 @@
         <input type="text" v-model="currentPerson.civil" class="form-control">
       </div>
       <div class="button-group">
-        <button @click="savePerson" class="btn-primary">Save</button>
+        <IconSave @click="savePerson"></IconSave>
+        <IconCancel @click="cancelEdit"></IconCancel>
+        <!--
         <button @click="cancelEdit" class="btn-secondary">Cancel</button>
+        <button @click="savePerson" class="btn-primary">Save</button>
+        -->
       </div>
     </div>
     <div v-else class="info-display">
@@ -33,15 +38,22 @@
       <p><strong>City:</strong> {{ person.city }}</p>
       <p><strong>Job:</strong> {{ person.job }}</p>
       <p><strong>Civil Status:</strong> {{ person.civil }}</p>
+      <IconEdit @click="editPerson">Edit</IconEdit>
+      <!--
       <button @click="editPerson" class="btn-primary">Edit</button>
+      -->
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import IconEdit from "@/components/icons/IconEdit.vue";
+import IconSave from "@/components/icons/IconSave.vue";
+import IconCancel from "@/components/icons/IconCancel.vue";
 
 export default {
+  components: {IconCancel, IconSave, IconEdit},
   props: {
     person: {
       type: Object,

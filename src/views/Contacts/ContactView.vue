@@ -1,33 +1,37 @@
 <template>
   <div class="bigDiv">
-    <!--<contact-information :contact="selectedContact" />-->
     <PersonalInfo :person="selectedContact"/>
     <AddressList :contact-id="id"/>
     <PhoneList :contact-id="id"/>
-  </div>
+    <div class="button-group">
+      <button @click="back" class="btn btn-dark">Back</button>
+      <button @click="openModal" class="btn btn-success">Call</button>
+    </div>
 
+    <!-- Call Modal Component -->
+    <CallModal :showModal.sync="showModal" :contactId="id"/>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
-import ContactInformation from '@/components/TheContact.vue';
-import App from "@/App.vue";
 import PersonalInfo from "@/components/PersonalInfo.vue";
 import AddressList from "@/components/AddressList.vue";
 import PhoneList from "@/components/PhoneList.vue";
+import CallModal from "@/components/CallModal.vue";
 
 export default {
   components: {
     PhoneList,
     AddressList,
     PersonalInfo,
-    App,
-    ContactInformation
+    CallModal
   },
   props: ['id'],
   data() {
     return {
-      selectedContact: null
+      selectedContact: null,
+      showModal: false
     };
   },
   created() {
@@ -39,13 +43,30 @@ export default {
         .catch(error => {
           console.error("There was an error fetching the contact information:", error);
         });
+  },
+  methods: {
+    back() {
+      this.$router.push('/contacts');
+    },
+    openModal() {
+      this.showModal = true;
+    }
   }
 };
 </script>
 
-<style>
-.bigDiv{
+<style scoped>
+.bigDiv {
   width: 300%;
   overflow-x: auto;
+  position: relative;
+}
+
+.button-group {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
 }
 </style>

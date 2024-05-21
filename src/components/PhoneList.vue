@@ -9,8 +9,8 @@
           <p><strong>Description:</strong> {{ phone.type }}</p>
         </div>
         <div class="button-group">
-          <button @click="editPhone(phone)" class="btn-primary">Edit</button>
-          <button @click="deletePhone(phone.id)" class="btn-secondary">Delete</button>
+          <IconEdit @click="editPhone(phone)">Edit</IconEdit>
+          <IconTrash  @click="deletePhone(phone.id)"> </IconTrash>
         </div>
       </div>
     </div>
@@ -39,8 +39,11 @@
 
 <script>
 import axios from 'axios';
-
+import Button from 'primevue/button';
+import IconEdit from "@/components/icons/IconEdit.vue";
+import IconTrash from "@/components/icons/IconTrash.vue";
 export default {
+  components: {IconTrash, IconEdit},
   props: {
     contactId: {
       type: Number,
@@ -133,12 +136,6 @@ export default {
   border-radius: 8px;
 }
 
-h2 {
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
 
 .phone-list {
   display: grid;
@@ -169,15 +166,6 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 
 .btn-secondary {

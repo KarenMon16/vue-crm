@@ -10,8 +10,13 @@
           <p><strong>Type:</strong> {{ address.type }}</p>
         </div>
         <div class="button-group">
+
+          <IconEdit style = "color:#050f1a;" @click="editAddress(address)">Edit</IconEdit>
+          <IconTrash  @click="deleteAddress(address.id)"> </IconTrash>
+          <!--
           <button @click="editAddress(address)" class="btn-primary">Edit</button>
           <button @click="deleteAddress(address.id)" class="btn-secondary">Delete</button>
+          -->
         </div>
     </div>
 
@@ -42,8 +47,11 @@
 
 <script>
 import axios from 'axios';
+import IconTrash from "@/components/icons/IconTrash.vue";
+import IconEdit from "@/components/icons/IconEdit.vue";
 
 export default {
+  components: {IconEdit, IconTrash},
   props: {
     contactId: {
       type: Number,
@@ -190,10 +198,9 @@ h2 {
 
 .button-group {
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  gap: 10px;
 }
+
 .button-group button {
   flex: 1;
 }
