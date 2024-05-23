@@ -2,19 +2,31 @@
   <div class="modal" v-if="showModal">
     <div class="modal-content">
       <span class="close" @click="closeModal">&times;</span>
-      <h2>Register a Call</h2>
-      <form @submit.prevent="saveCall">
+      <h2>Book an Appointment</h2>
+      <form @submit.prevent="bookAppointment">
         <div class="form-group">
-          <label>Date and Time:</label>
-          <p>{{ formattedDate }}</p>
+          <label for="date">Date:</label>
+          <input type="date" v-model="appointment.date" id="date" required>
+        </div>
+        <div class="form-group">
+          <label for="hour">Hour:</label>
+          <input type="time" v-model="appointment.hour" id="hour" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <select v-model="appointment.address" id="address">
+            <option v-for="address in addresses" :key="address.id" :value="address.id">{{ address.name }}</option>
+            <option value="">Other</option>
+          </select>
+          <input v-if="appointment.address === ''" type="text" v-model="appointment.otherAddress" placeholder="Enter address">
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <textarea v-model="description" id="description" required></textarea>
+          <textarea v-model="appointment.description" id="description" required></textarea>
         </div>
         <div class="modal-buttons">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" @click="bookAppointment" class="btn btn-success">Book</button>
+          <button type="button" @click="closeModal" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Book</button>
         </div>
       </form>
     </div>
@@ -22,6 +34,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: {
     showModal: Boolean,
@@ -29,32 +43,41 @@ export default {
   },
   data() {
     return {
-      description: '',
-      currentDate: new Date()
+      addresses: [],
+      appointment: {
+        date: '',
+        hour: '',
+        address: '',
+        otherAddress: '',
+        description: ''
+      }
     };
   },
-  computed: {
-    formattedDate() {
-      return this.currentDate.toLocaleString();
+  watch: {
+    showModal(newVal) {
+      if (newVal) {
+        this.fetchAddresses();
+      }
     }
   },
   methods: {
+    fetchAddresses() {
+      // Fetch the addresses
+      axios.get('http://localhost:8080/addresses') // Adjust URL as necessary
+          .then(response => {
+            this.addresses = response.data;
+          })
+          .catch(error => {
+            console.error("There was an error fetching the addresses:", error);
+          });
+    },
     closeModal() {
       this.$emit('update:showModal', false);
     },
-    saveCall() {
-      // Handle saving the call log
-      const callDetails = {
-        contactId: this.contactId,
-        date: this.currentDate,
-        description: this.description
-      };
-      console.log('Call saved:', callDetails);
-      this.closeModal();
-    },
     bookAppointment() {
-      // Redirect to the CalendarView
-      this.$router.push('/calendar');
+      // Handle booking logic here
+      console.log('Appointment booked:', this.appointment);
+      this.closeModal();
     }
   }
 };
@@ -117,17 +140,17 @@ h2 {
   font-weight: bold;
 }
 
-.form-group p {
-  font-size: 16px;
-  color: #333;
-}
-
+.form-group input,
+.form-group select,
 .form-group textarea {
   width: calc(100% - 20px);
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+}
+
+.form-group textarea {
   resize: vertical;
   min-height: 80px;
 }
@@ -155,12 +178,12 @@ h2 {
   background-color: #0056b3;
 }
 
-.modal-buttons .btn-success {
-  background-color: #28a745;
+.modal-buttons .btn-secondary {
+  background-color: #6c757d;
   color: #fff;
 }
 
-.modal-buttons .btn-success:hover {
-  background-color: #218838;
+.modal-buttons .btn-secondary:hover {
+  background-color: #5a6268;
 }
 </style>

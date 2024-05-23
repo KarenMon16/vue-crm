@@ -1,7 +1,6 @@
 <template>
+  <button @click="addNewPhone" class="btn-secondary">Add New Phone</button>
   <div class="phone-section">
-    <h2>Phone Numbers</h2>
-    <button @click="addNewPhone" class="btn-secondary">Add New Phone</button>
     <div class="phone-list">
       <div v-for="phone in phones" :key="phone.id" class="phone-card">
         <div class="phone-info">
@@ -135,8 +134,6 @@ export default {
   padding: 20px;
   border-radius: 8px;
 }
-
-
 .phone-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

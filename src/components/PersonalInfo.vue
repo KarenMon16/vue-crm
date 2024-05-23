@@ -1,7 +1,5 @@
 <template>
   <div class="info-section">
-    <h2>Personal Info</h2>
-
     <div v-if="editing" class="info-edit" >
       <div class="form-group">
         <label>ID:</label>

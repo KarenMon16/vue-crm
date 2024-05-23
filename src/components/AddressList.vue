@@ -1,8 +1,8 @@
 <template>
-  <h2>Addresses</h2>
   <button @click="addNewAddress" class="btn-secondary">Add New Address</button>
   <br>
   <div class="address-section">
+    <div class="phone-list">
       <div v-for="address in addresses" :key="address.id" class="address-card">
         <div class="address-info">
           <p><strong>Address:</strong> {{ address.address }}</p>
@@ -18,6 +18,7 @@
           <button @click="deleteAddress(address.id)" class="btn-secondary">Delete</button>
           -->
         </div>
+      </div>
     </div>
 
     <!-- Address Form Modal -->
@@ -143,9 +144,8 @@ export default {
 
 <style scoped>
 .address-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 10px;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 h2 {
@@ -153,10 +153,13 @@ h2 {
   margin-bottom: 20px;
 }
 .address-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .address-info {
+  margin-bottom: 10px;
   padding: 10px;
 }
 .modal {
@@ -214,6 +217,12 @@ h2 {
 .btn-primary {
   background-color: #333;
   color: white;
+}
+
+.phone-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .btn-secondary {
