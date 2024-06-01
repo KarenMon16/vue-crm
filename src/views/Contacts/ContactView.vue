@@ -6,7 +6,7 @@
         <summary>Personal Information</summary>
         <PersonalInfo :person="selectedContact"/>
       </details>
-      <details>
+      <details open>
         <summary>Address List</summary>
         <AddressList :contact-id="id"/>
       </details>
@@ -14,7 +14,7 @@
         <summary>Phone List</summary>
         <PhoneList :contact-id="id"/>
       </details>
-      <details>
+      <details open>
         <summary>Call History</summary>
         <CallList :contact-id="id"/>
       </details>

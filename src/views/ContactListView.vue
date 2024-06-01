@@ -2,40 +2,113 @@
 import { DataTable } from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent, onMounted } from 'vue';
 import axios from "axios";
+import IconSelect from "@/components/icons/IconSelect.vue";
 
 DataTable.use(DataTablesCore);
 
-const id_seller = 1;
-
 export default defineComponent({
   components: {
+    IconSelect,
     DataTable
   },
   setup() {
     const columns = ref([
-      { title: 'Id', data: 'id' },
-      { title: 'Name', data: 'name' },
-      { title: 'City', data: 'city' },
-      { title: 'Civil Status', data: 'civil' },
-      { title: 'Job', data: 'job' },
-      { title: 'Last Call', data: 'last_call' },
-      { title: 'Last Visit', data: 'last_visit' },
-      { title: 'Option', data: null, render: function(data, type, row) {
-          return `<button class="btn btn-primary details-button" data-id="${row.id}">Details</button>`;
+      {title: 'Id', data: 'id'},
+      {title: 'Name', data: 'name'},
+      {title: 'City', data: 'city'},
+      {title: 'Civil Status', data: 'civil'},
+      {title: 'Job', data: 'job'},
+      { title: 'Last Call', data: 'last_call', render: function(data, type, row) {
+          return formatDate(data);
+        }
+      },
+      { title: 'Last Visit', data: 'last_visit', render: function(data, type, row) {
+          return formatDate(data);
+        }
+      },
+      {
+        title: 'Option', data: null, render: function (data, type, row) {
+          return `<button class="btn btn-light details-button" data-id="${row.id}">Details</button>`;
         }
       }
     ]);
-//    axios.get(`http://localhost:8080/contacts?id=${this.id}`)
-    const ajax = {
-      url: `http://localhost:8080/contacts/seller?id=${id_seller}`,
+
+    const id_seller = ref(1);
+    const sellers = ref([]);
+    const selectedSellerId = ref(null);
+    const dataTableData = ref([]);
+    const ajaxConfig = ref({
+      url: '',
       dataSrc: ''
+    });
+
+    const fetchSellers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/sellers/all?id=${id_seller.value}`);
+        sellers.value = response.data;
+        if (sellers.value.length > 0) {
+          selectedSellerId.value = sellers.value[0].id;
+        }
+      } catch (error) {
+        console.error("Error fetching sellers:", error);
+      }
+    };
+
+    const fetchContacts = async () => {
+      if (selectedSellerId.value) {
+        try {
+          const response = await axios.get(`http://localhost:8080/contacts/seller?id=${selectedSellerId.value}`);
+          const contacts = response.data;
+
+          // Format last_call and last_visit
+          contacts.forEach(contact => {
+            contact.last_call = formatDate(contact.last_call);
+            contact.last_visit = formatDate(contact.last_visit);
+          });
+
+          // Log the response
+          console.log("Contacts from backend:", contacts);
+
+          // Update dataTableData with new contacts
+          dataTableData.value = contacts;
+
+          // Reload DataTable
+          const dataTable = refDataTable.value?.DTInstance;
+          if (dataTable) {
+            dataTable.ajax.url('').load();
+          }
+        } catch (error) {
+          console.error("Error fetching contacts:", error);
+        }
+      }
+    };
+
+    const reloadDataTable = () => {
+      fetchContacts();
+    };
+
+    const refDataTable = ref(null);
+
+    onMounted(() => {
+      fetchSellers();
+    });
+    // Function to format date
+    const formatDate = (dateString) => {
+      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
     };
 
     return {
       columns,
-      ajax
+      sellers,
+      selectedSellerId,
+      ajaxConfig,
+      refDataTable,
+      dataTableData,
+      fetchContacts,
+      reloadDataTable
     };
   },
   methods: {
@@ -45,7 +118,7 @@ export default defineComponent({
   },
   mounted() {
     const vm = this;
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
       if (event.target && event.target.matches('.details-button')) {
         const id = event.target.getAttribute('data-id');
         vm.details(id);
@@ -54,13 +127,29 @@ export default defineComponent({
   }
 });
 </script>
+
 <template>
   <div class="container">
-    <h1>Royal Prestige New York SR</h1>
+    <h1>Contact List</h1>
 
+    <div class="row align-items-center mb-3">
+      <!-- Seller Selector Dropdown -->
+      <div class="col">
+        <select v-model="selectedSellerId" class="form-select" style="width: auto;">
+          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
+        </select>
+      </div>
+
+      <!-- IconSelect Button to fetch contacts -->
+      <div class="col-auto">
+        <IconSelect @click="fetchContacts"></IconSelect>
+      </div>
+    </div>
+
+    <!-- DataTable -->
     <DataTable
         :columns="columns"
-        :ajax="ajax"
+        :data="dataTableData"
         class="table table-hover table-striped"
     >
       <thead>
@@ -78,6 +167,7 @@ export default defineComponent({
     </DataTable>
   </div>
 </template>
+
 <style>
 @import 'datatables.net-bs5';
 

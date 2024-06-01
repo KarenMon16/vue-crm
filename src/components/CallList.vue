@@ -1,5 +1,10 @@
 <template>
   <div class="call-list-container">
+    <button class="btn-secondary" v-if="!isCalling" @click="initiateCall">Call</button>
+    <div v-if="isCalling" class="call-input">
+      <input type="text" v-model="newComment" placeholder="Enter your comment" />
+      <button class="btn-primary" @click="saveCall">Save</button>
+    </div>
     <ul v-if="calls.length" class="call-list">
       <li v-for="call in calls" :key="call.id" class="call-item">
         <h6 class="call-details">
@@ -11,15 +16,30 @@
     </ul>
     <p v-else class="no-calls-message">No calls have been made yet.</p>
     <p v-if="error" class="error-message">{{ error }}</p>
+
+    <BookAppointmentModal
+        :isVisible="showAppointmentModal"
+        :contactId="contactId"
+        :initialComment="newComment"
+        @close="closeAppointmentModal"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import BookAppointmentModal from './BookAppointmentModal.vue';
 
 export default {
+  components: {
+    BookAppointmentModal
+  },
   props: {
     contactId: {
+      type: Number,
+      required: true
+    },
+    operatorId: {
       type: Number,
       required: true
     }
@@ -27,7 +47,10 @@ export default {
   data() {
     return {
       calls: [],
-      error: null
+      error: null,
+      isCalling: false,
+      newComment: '',
+      showAppointmentModal: false
     };
   },
   created() {
@@ -52,6 +75,36 @@ export default {
     formatTime(datetime) {
       const date = new Date(datetime);
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    },
+    initiateCall() {
+      if (confirm('Ready to call?')) {
+        this.isCalling = true;
+      }
+    },
+    saveCall() {
+      const newCall = {
+        id_operator: 1,
+        id_contact: this.contactId,
+        called_at: new Date().toISOString(),
+        comment: this.newComment
+      };
+      axios.post('http://localhost:8080/calls', newCall)
+          .then(response => {
+            this.calls.unshift(response.data);
+            this.isCalling = false;
+            if (confirm('Was an Appointment booked?')) {
+              this.newComment = newCall.comment;  // Ensure the comment is correctly set before showing the modal
+              this.showAppointmentModal = true;
+            }
+            this.fetchCalls();
+          })
+          .catch(error => {
+            this.error = 'There was an error saving the call.';
+            console.error("Error saving call:", error);
+          });
+    },
+    closeAppointmentModal() {
+      this.showAppointmentModal = false;
     }
   }
 };
@@ -63,6 +116,12 @@ export default {
   max-width: 1100px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+}
+
+.call-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .call-list {
@@ -96,5 +155,33 @@ export default {
   color: #888;
   text-align: center;
   margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 </style>

@@ -40,7 +40,7 @@ onMounted(() => {
 const loadEvents = async () => {
   try {
     // Make HTTP GET request to fetch events from backend
-    const response = await fetch('http://localhost:8080/appointments/all');
+    const response = await fetch('http://localhost:8080/appointments/all?id=1');
     if (!response.ok) {
       throw new Error('Failed to fetch events');
     }
@@ -49,9 +49,9 @@ const loadEvents = async () => {
     // Update events in the calendar
     config.events = events.map(event => ({
       id: event.id,
-      start: new DayPilot.Date(event.ts_visit),
-      end: new DayPilot.Date(event.ts_visit),
-      text: event.id_appt
+      start: new DayPilot.Date(event.visit_date),
+      end: new DayPilot.Date(event.visit_date),
+      text: event.comment
     }));
   } catch (error) {
     console.error('Error loading events:', error);
