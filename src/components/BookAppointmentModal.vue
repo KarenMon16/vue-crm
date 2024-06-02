@@ -29,6 +29,7 @@ import axios from 'axios';
 export default {
   props: {
     isVisible: Boolean,
+    selectedSellerId:Number,
     contactId: Number,
     operatorId: Number,
     initialComment: String
@@ -65,7 +66,7 @@ export default {
     saveAppointment() {
       const visitDate = new Date(`${this.appointment.date}T${this.appointment.hour}`).getTime();
       const newAppointment = {
-        id_seller: 1,
+        id_seller: this.selectedSellerId,
         id_operator: 1,
         id_contact: this.contactId,
         visit_date: visitDate,

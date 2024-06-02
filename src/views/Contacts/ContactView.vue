@@ -16,7 +16,7 @@
       </details>
       <details open>
         <summary>Call History</summary>
-        <CallList :contact-id="id"/>
+        <CallList :contact-id="id" :selectedSellerId="selectedContact.id_seller"/>
       </details>
       <div class="button-group">
         <button @click="back" class="btn btn-dark">Back</button>

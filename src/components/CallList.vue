@@ -19,6 +19,7 @@
 
     <BookAppointmentModal
         :isVisible="showAppointmentModal"
+        :selectedSellerId="selectedSellerId"
         :contactId="contactId"
         :initialComment="newComment"
         @close="closeAppointmentModal"
@@ -40,6 +41,10 @@ export default {
       required: true
     },
     operatorId: {
+      type: Number,
+      required: true
+    },
+    selectedSellerId: {
       type: Number,
       required: true
     }

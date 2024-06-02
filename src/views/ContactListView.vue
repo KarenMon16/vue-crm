@@ -60,12 +60,11 @@ export default defineComponent({
       {title: 'City', data: 'city'},
       {title: 'Civil Status', data: 'civil'},
       {title: 'Job', data: 'job'},
-      { title: 'Last Call', data: 'last_call', render: function (data, type, row) {
+      { title: 'Last Call', data: 'last_call', render: function(data, type, row) {
           return formatDate(data);
         }
       },
-      {
-        title: 'Last Visit', data: 'last_visit', render: function (data, type, row) {
+      { title: 'Last Visit', data: 'last_visit', render: function(data, type, row) {
           return formatDate(data);
         }
       },
@@ -181,7 +180,7 @@ export default defineComponent({
 
 <style>
 @import 'datatables.net-bs5';
-
+//Safe
 .container {
   width: 300%; /* Adjust the width as needed */
 }
