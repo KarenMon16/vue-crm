@@ -1,8 +1,48 @@
+<template>
+  <div class="container">
+    <h1>Contact List</h1>
+
+    <div class="row align-items-center mb-3">
+      <!-- Seller Selector Dropdown -->
+      <div class="col">
+        <select v-model="selectedSellerId" class="form-select" style="width: auto;">
+          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
+        </select>
+      </div>
+
+      <!-- IconSelect Button to fetch contacts -->
+      <div class="col-auto">
+        <IconSelect @click="fetchContacts"></IconSelect>
+      </div>
+    </div>
+
+    <!-- DataTable -->
+    <DataTable
+        :columns="columns"
+        :data="dataTableData"
+        class="table table-hover table-striped"
+    >
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>Civil Status</th>
+        <th>Job</th>
+        <th>Last Call</th>
+        <th>Last Visit</th>
+        <th>Option</th>
+      </tr>
+      </thead>
+    </DataTable>
+  </div>
+</template>
+
 <script>
 import { DataTable } from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ref, defineComponent, onMounted } from 'vue';
+import { ref, defineComponent, onMounted, watch } from 'vue';
 import axios from "axios";
 import IconSelect from "@/components/icons/IconSelect.vue";
 
@@ -20,11 +60,12 @@ export default defineComponent({
       {title: 'City', data: 'city'},
       {title: 'Civil Status', data: 'civil'},
       {title: 'Job', data: 'job'},
-      { title: 'Last Call', data: 'last_call', render: function(data, type, row) {
+      { title: 'Last Call', data: 'last_call', render: function (data, type, row) {
           return formatDate(data);
         }
       },
-      { title: 'Last Visit', data: 'last_visit', render: function(data, type, row) {
+      {
+        title: 'Last Visit', data: 'last_visit', render: function (data, type, row) {
           return formatDate(data);
         }
       },
@@ -37,7 +78,7 @@ export default defineComponent({
 
     const id_seller = ref(1);
     const sellers = ref([]);
-    const selectedSellerId = ref(null);
+    const selectedSellerId = ref(localStorage.getItem('selectedSellerId') || null);
     const dataTableData = ref([]);
     const ajaxConfig = ref({
       url: '',
@@ -48,7 +89,7 @@ export default defineComponent({
       try {
         const response = await axios.get(`http://localhost:8080/sellers/all?id=${id_seller.value}`);
         sellers.value = response.data;
-        if (sellers.value.length > 0) {
+        if (sellers.value.length > 0 && !selectedSellerId.value) {
           selectedSellerId.value = sellers.value[0].id;
         }
       } catch (error) {
@@ -93,10 +134,20 @@ export default defineComponent({
 
     onMounted(() => {
       fetchSellers();
+      fetchContacts();
     });
+
+    // Watch for changes in selectedSellerId and save to localStorage
+    watch(selectedSellerId, (newId) => {
+      if (newId !== null) {
+        localStorage.setItem('selectedSellerId', newId);
+        fetchContacts();
+      }
+    });
+
     // Function to format date
     const formatDate = (dateString) => {
-      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+      const options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'};
       return new Date(dateString).toLocaleDateString('en-US', options);
     };
 
@@ -127,46 +178,6 @@ export default defineComponent({
   }
 });
 </script>
-
-<template>
-  <div class="container">
-    <h1>Contact List</h1>
-
-    <div class="row align-items-center mb-3">
-      <!-- Seller Selector Dropdown -->
-      <div class="col">
-        <select v-model="selectedSellerId" class="form-select" style="width: auto;">
-          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
-        </select>
-      </div>
-
-      <!-- IconSelect Button to fetch contacts -->
-      <div class="col-auto">
-        <IconSelect @click="fetchContacts"></IconSelect>
-      </div>
-    </div>
-
-    <!-- DataTable -->
-    <DataTable
-        :columns="columns"
-        :data="dataTableData"
-        class="table table-hover table-striped"
-    >
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-        <th>Civil Status</th>
-        <th>Job</th>
-        <th>Last Call</th>
-        <th>Last Visit</th>
-        <th>Option</th>
-      </tr>
-      </thead>
-    </DataTable>
-  </div>
-</template>
 
 <style>
 @import 'datatables.net-bs5';

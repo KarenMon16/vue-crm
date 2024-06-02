@@ -7,6 +7,7 @@ import {DayPilot, DayPilotMonth} from '@daypilot/daypilot-lite-vue';
 import { ref, reactive, onMounted } from 'vue';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 const config = reactive({
   locale: "en-us",
   timeRangeSelectedHandling: "Enabled",
@@ -14,7 +15,9 @@ const config = reactive({
     const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
     const dp = args.control;
     dp.clearSelection();
-    if (modal.canceled) { return; }
+    if (modal.canceled) {
+      return;
+    }
     dp.events.add({
       start: args.start,
       end: args.end,
@@ -47,12 +50,19 @@ const loadEvents = async () => {
     // Parse response JSON
     const events = await response.json();
     // Update events in the calendar
-    config.events = events.map(event => ({
-      id: event.id,
-      start: new DayPilot.Date(event.visit_date),
-      end: new DayPilot.Date(event.visit_date),
-      text: event.comment
-    }));
+    config.events = events.map(event => {
+      const start = new DayPilot.Date(event.visit_date);
+      const hour = start.toString("HH:mm");
+      const hourValue = parseInt(start.toString("HH"), 10);
+      const backColor = hourValue < 12 ? "#f5e8cb" : "#cbe6f5";
+      return {
+        id: event.id,
+        start: start,
+        end: start, // assuming event is for a specific time and not a range
+        text: hour,
+        backColor: backColor
+      };
+    });
   } catch (error) {
     console.error('Error loading events:', error);
   }
