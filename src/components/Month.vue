@@ -3,10 +3,16 @@
 </template>
 
 <script setup>
-import {DayPilot, DayPilotMonth} from '@daypilot/daypilot-lite-vue';
-import { ref, reactive, onMounted } from 'vue';
-
+import { ref, reactive, watch } from 'vue';
+import { DayPilot, DayPilotMonth } from '@daypilot/daypilot-lite-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const props = defineProps({
+  selectedSellerId: {
+    type: [String, Number],
+    required: true,
+  },
+});
 
 const config = reactive({
   locale: "en-us",
@@ -37,13 +43,11 @@ const config = reactive({
   eventClickHandling: "Enabled",
 });
 const monthRef = ref(null);
-onMounted(() => {
-  loadEvents();
-});
+
 const loadEvents = async () => {
   try {
-    // Make HTTP GET request to fetch events from backend
-    const response = await fetch('http://localhost:8080/appointments/all?id=1');
+    // Make HTTP GET request to fetch events from backend using selectedSellerId
+    const response = await fetch(`http://localhost:8080/appointments/all?id=${props.selectedSellerId}`);
     if (!response.ok) {
       throw new Error('Failed to fetch events');
     }
@@ -67,4 +71,12 @@ const loadEvents = async () => {
     console.error('Error loading events:', error);
   }
 };
+
+// Watch for changes in selectedSellerId and reload events
+watch(() => props.selectedSellerId, () => {
+  loadEvents();
+});
+
+// Load events initially
+loadEvents();
 </script>

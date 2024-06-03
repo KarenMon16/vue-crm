@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@daypilot/daypilot-lite-vue": "^3.22.0",
     "@googlemaps/js-api-loader": "^1.16.6",
     "@romanran/vue-simple-calendar": "^1.4.2",
     "ag-grid-react": "^31.2.1",
