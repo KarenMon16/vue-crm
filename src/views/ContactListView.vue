@@ -21,9 +21,9 @@
       <tr>
         <th>Id</th>
         <th>Name</th>
-        <th>City</th>
+        <th class="wider-column">City</th> <!-- Added wider-column class to make the City column wider -->
         <th>Civil Status</th>
-        <th>Job</th>
+        <th class="wider-column">Job</th>
         <th>Last Call</th>
         <th>Last Visit</th>
         <th>Option</th>
@@ -172,23 +172,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
+@import 'datatables.net-bs5';
 .container {
   width: 1200px; /* Set a static width */
   position: relative; /* Ensure positioning context for absolute positioning */
 }
-
-.top-div {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; /* Take full width of container */
-  padding: 20px;
-}
-
-.bottom-div {
-  margin-top: 50px; /* Add some space so the top div doesn't overlap completely */
-  padding: 20px;
-  width: 800px;
+.wider-column {
+  width: 180px; /* Adjust the width as needed */
 }
 </style>

@@ -20,8 +20,6 @@
       </details>
       <div class="button-group">
         <button @click="back" class="btn btn-dark">Back</button>
-        <IconEdit @click="openModal" />
-        <button @click="openCallHistory" class="btn btn-success">Call</button>
       </div>
 
     </div>

@@ -191,7 +191,7 @@ export default {
 }
 
 .pretty-input {
-  width: 1000px;
+  width: 5000px;
   padding: 10px; /* Add padding */
   border: 1px solid #ccc; /* Add a border */
   border-radius: 5px; /* Round the corners */

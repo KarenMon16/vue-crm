@@ -15,11 +15,11 @@
       </div>
       <div class="form-group">
         <label>Civil Status :</label>
-        <input type="text" v-model="currentPerson.job" class="form-control">
+        <input type="text" v-model="currentPerson.civil" class="form-control">
       </div>
       <div class="form-group">
         <label>Job:</label>
-        <input type="text" v-model="currentPerson.civil" class="form-control">
+        <input type="text" v-model="currentPerson.job" class="form-control">
       </div>
       <div class="button-group">
         <IconSave @click="savePerson"></IconSave>

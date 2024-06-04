@@ -16,7 +16,7 @@ import Dashboard from "@/components/Dashboard.vue";
 <style scoped>
 .layout {
   display: flex;
-  height: calc(100vh - 20px); /* Make the layout take full viewport height minus the top space */
+  height: calc(100vh - 10px); /* Make the layout take full viewport height minus the top space */
   padding-top: 20px; /* Add space on top */
 }
 
