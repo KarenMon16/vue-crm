@@ -2,7 +2,7 @@
   <div class="call-list-container">
     <button class="btn-secondary" v-if="!isCalling" @click="initiateCall">Call</button>
     <div v-if="isCalling" class="call-input">
-      <input type="text" v-model="newComment" placeholder="Enter your comment" />
+      <input type="text" v-model="newComment" placeholder="Enter your comment" class="pretty-input" />
       <button class="btn-primary" @click="saveCall">Save</button>
     </div>
     <ul v-if="calls.length" class="call-list">
@@ -188,5 +188,19 @@ export default {
 
 .btn-secondary:hover {
   background-color: #5a6268;
+}
+
+.pretty-input {
+  width: 1000px;
+  padding: 10px; /* Add padding */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 5px; /* Round the corners */
+  font-size: 16px; /* Increase font size */
+  outline: none; /* Remove outline */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.pretty-input:focus {
+  border-color: dodgerblue; /* Change border color on focus */
 }
 </style>

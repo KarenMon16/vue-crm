@@ -4,7 +4,6 @@
       <h5 class="card-title">{{ campaign.company_name }}: {{ campaign.name }}</h5>
       <p class="card-text">{{ campaign.overview }}</p>
       <button @click="redirectToMoreInfo" class="btn btn-light">See Speeches</button>
-      <button @click="updateIdSeller(campaign.id)" class="btn btn-light">Start Working</button>
     </div>
   </div>
 </template>

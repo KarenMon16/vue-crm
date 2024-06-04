@@ -38,13 +38,6 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
             <IconCalendar/>
             </span>
             Calendar</RouterLink></li>
-          <li><RouterLink to="/appt">
-            <span data-inline="false">
-            <IconContacts/>
-            </span>
-            Appointments</RouterLink>
-          </li>
-
         </ul>
       </div>
     </nav>
@@ -53,10 +46,16 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
 
 <style scoped>
 .msb {
+
+  /* Scoped styles for the dashboard */
+  background-color: #f8f9fa;
+  padding: 10px;
+  box-sizing: border-box;
+  /* Ensure there is no additional margin or padding on the outer div */
+  margin: 0;
   text-decoration: none;
   align-content: space-between;
   width: 100%;
-  background-color: #F5F7F9;
   position: fixed;
   left: 0;
   top: 0;

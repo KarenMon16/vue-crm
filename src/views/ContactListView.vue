@@ -6,7 +6,7 @@
       <!-- Seller Selector Dropdown -->
       <div >
         <select v-model="selectedSellerId" class="form-select" style="width: auto;">
-          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
+          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }} - {{seller.company_name}}</option>
         </select>
       </div>
     </div>
@@ -45,7 +45,6 @@ DataTable.use(DataTablesCore);
 
 export default defineComponent({
   components: {
-    IconSelect,
     DataTable
   },
   setup() {
@@ -173,10 +172,23 @@ export default defineComponent({
 });
 </script>
 
-<style>
-@import 'datatables.net-bs5';
-//Safe
+<style scoped>
 .container {
-  width: 300%; /* Adjust the width as needed */
+  width: 1200px; /* Set a static width */
+  position: relative; /* Ensure positioning context for absolute positioning */
+}
+
+.top-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Take full width of container */
+  padding: 20px;
+}
+
+.bottom-div {
+  margin-top: 50px; /* Add some space so the top div doesn't overlap completely */
+  padding: 20px;
+  width: 800px;
 }
 </style>

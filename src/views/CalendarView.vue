@@ -1,17 +1,13 @@
 <template>
   <div class="container">
-    <h1>Appointments</h1>
-
+    <h1>Citas agendadas</h1>
     <div class="row align-items-center mb3">
       <!-- Seller Selector Dropdown -->
-      <div class="col">
         <select v-model="selectedSellerId" class="form-select" style="width: auto;" @change="onSellerChange">
-          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
+          <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }} - {{seller.company_name}}</option>
         </select>
       </div>
-    </div>
     <div class="bottom-div">
-      Citas agendadas
       <Month :selectedSellerId="selectedSellerId"/>
     </div>
   </div>

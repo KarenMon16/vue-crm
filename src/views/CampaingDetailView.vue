@@ -1,10 +1,5 @@
 <template>
   <div>
-    <h2>Royal Prestige New York SR</h2>
-    <br>
-    <h4>Description</h4>
-    <p>Representative Simon Romero from Royal Prestige is based in NY, available from 8:00 AM to 5:00 PM EST and able to drive to any city in NY</p>
-    <br>
     <h4>Scripts</h4>
     <TheSpeech v-for="(speech, index) in speeches" :key="index" :description="speech.title" :speech="speech.speech" />
   </div>

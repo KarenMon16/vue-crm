@@ -20,14 +20,6 @@ const router = createRouter({
       component: () => import('../views/ContactListView.vue')
     },
     {
-      path: '/contactsZ',
-      name: 'contactsZ',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Contacts/ContactsView.vue')
-    },
-    {
       path: '/calendar',
       name: 'calendar',
       // route level code-splitting
@@ -41,7 +33,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Contacts/ContactView.vue'),
+      component: () => import('../views/ContactView.vue'),
       props: true
     },
     {
