@@ -19,11 +19,11 @@
     >
       <thead>
       <tr>
-        <th>Id</th>
-        <th>Name</th>
+        <th class="small-column">Id</th>
+        <th class="wider-column">Name</th>
         <th class="wider-column">City</th> <!-- Added wider-column class to make the City column wider -->
-        <th>Civil Status</th>
-        <th class="wider-column">Job</th>
+        <th class="medium-column">Civil Status</th>
+        <th class="medium-column">Job</th>
         <th>Last Call</th>
         <th>Last Visit</th>
         <th>Option</th>
@@ -175,10 +175,16 @@ export default defineComponent({
 <style>
 @import 'datatables.net-bs5';
 .container {
-  width: 1200px; /* Set a static width */
+  width: 1500px; /* Set a static width */
   position: relative; /* Ensure positioning context for absolute positioning */
 }
 .wider-column {
   width: 180px; /* Adjust the width as needed */
+}
+.medium-column {
+  width: 130px; /* Adjust the width as needed */
+}
+.small-column {
+  width: 50px; /* Adjust the width as needed */
 }
 </style>
