@@ -2,17 +2,12 @@
   <div class="container">
     <h1>Contact List</h1>
 
-    <div class="row align-items-center mb-3">
+    <div class="container" >
       <!-- Seller Selector Dropdown -->
-      <div class="col">
+      <div >
         <select v-model="selectedSellerId" class="form-select" style="width: auto;">
           <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
         </select>
-      </div>
-
-      <!-- IconSelect Button to fetch contacts -->
-      <div class="col-auto">
-        <IconSelect @click="fetchContacts"></IconSelect>
       </div>
     </div>
 

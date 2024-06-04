@@ -56,14 +56,17 @@ const loadEvents = async () => {
     // Update events in the calendar
     config.events = events.map(event => {
       const start = new DayPilot.Date(event.visit_date);
-      const hour = start.toString("HH:mm");
+      const hours = start.getHours()-4
+      const hour = hours < 10? "0"+hours : hours;
+      const minutes = start.getMinutes()
+      const minute = minutes< 10? "0"+minutes : minutes;
       const hourValue = parseInt(start.toString("HH"), 10);
-      const backColor = hourValue < 12 ? "#f5e8cb" : "#cbe6f5";
+      const backColor = hours < 12 ? "#f5e8cb" : "#cbe6f5";
       return {
         id: event.id,
         start: start,
         end: start, // assuming event is for a specific time and not a range
-        text: hour,
+        text: hour+":"+minute,
         backColor: backColor
       };
     });

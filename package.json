@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.23.1",
     "datatables.net-bs5": "^2.0.6",
     "datatables.net-vue3": "^3.0.1",
+    "date-fns": "^3.6.0",
     "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/2024.2.5936.tar.gz",
     "daypilot-pro-vue": "https://npm.daypilot.org/daypilot-pro-vue/trial/2023.4.5801.tar.gz",
     "dayspan-vuetify": "^0.4.0",
@@ -29,6 +30,7 @@
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.1.6",
+    "vue3-datepicker": "^0.4.0",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
