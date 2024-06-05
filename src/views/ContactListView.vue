@@ -139,9 +139,10 @@ export default defineComponent({
     });
 
     // Function to format date
-    const formatDate = (dateString) => {
-      const options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'};
-      return new Date(dateString).toLocaleDateString('en-US', options);
+    const formatDate = (datetime) => {
+      const date = new Date(datetime);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
     };
 
     return {

@@ -75,11 +75,20 @@ export default {
     formatDate(datetime) {
       const date = new Date(datetime);
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return date.toLocaleDateString(undefined, options);
+      return date.toLocaleDateString('en-US', options);
     },
     formatTime(datetime) {
       const date = new Date(datetime);
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      // Adjust timestamp to Eastern Standard Time (EST)
+      date.setUTCHours(date.getUTCHours()); // Subtract 5 hours for EST
+      // Explicitly set timezone to Eastern Standard Time (EST)
+      // Add AM or PM
+      return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        timeZone: 'America/New_York'
+      });
     },
     initiateCall() {
       if (confirm('Ready to call?')) {
