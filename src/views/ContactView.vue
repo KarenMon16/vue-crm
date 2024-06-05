@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h2>{{ selectedContact ? selectedContact.name : 'Loading...' }}</h2>
     <div class="bigDiv">
       <details open>
@@ -68,6 +68,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding-left: 100px;
+  width: 1600px; /* Set a static width */
+  position: relative; /* Ensure positioning context for absolute positioning */
+}
 .bigDiv {
   width: 1200px; /* Set a static width */
   overflow-x: auto;

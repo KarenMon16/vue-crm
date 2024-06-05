@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Contact List</h1>
 
-    <div class="container" >
+    <div >
       <!-- Seller Selector Dropdown -->
       <div >
         <select v-model="selectedSellerId" class="form-select" style="width: auto;">
@@ -141,7 +141,7 @@ export default defineComponent({
     // Function to format date
     const formatDate = (datetime) => {
       const date = new Date(datetime);
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
       return date.toLocaleDateString('en-US', options);
     };
 
@@ -173,10 +173,11 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 @import 'datatables.net-bs5';
 .container {
-  width: 1500px; /* Set a static width */
+  padding-left: 100px;
+  width: 1600px; /* Set a static width */
   position: relative; /* Ensure positioning context for absolute positioning */
 }
 .wider-column {

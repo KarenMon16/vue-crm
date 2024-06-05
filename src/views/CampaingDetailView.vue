@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h4>Scripts</h4>
-    <TheSpeech v-for="(speech, index) in speeches" :key="index" :description="speech.title" :speech="speech.speech" />
+  <div class="container">
+    <div>
+      <h4>Scripts</h4>
+      <TheSpeech v-for="(speech, index) in speeches" :key="index" :description="speech.title" :speech="speech.speech" />
+    </div>
   </div>
   <div class="back-button-container">
     <button class="btn btn-info" @click="back">Back</button>
@@ -46,6 +48,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding-left: 100px;
+  width: 1600px; /* Set a static width */
+  position: relative; /* Ensure positioning context for absolute positioning */
+}
 .back-button-container {
   position: fixed;
   bottom: 20px;

@@ -46,7 +46,6 @@ import IconCalendar from "@/components/icons/IconCalendar.vue";
 
 <style scoped>
 .msb {
-
   /* Scoped styles for the dashboard */
   background-color: #f8f9fa;
   padding: 10px;

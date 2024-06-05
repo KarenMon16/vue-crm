@@ -48,7 +48,8 @@ const onSellerChange = () => {
 
 <style scoped>
 .container {
-  width: 100%;
+  padding-left: 150px;
+  width: 1600px; /* Set a static width */
   position: relative; /* Ensure positioning context for absolute positioning */
 }
 

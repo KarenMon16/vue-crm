@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Campaigns</h1>
     <div class="card-container">
       <CardComponent v-for="campaign in campaigns" :key="campaign.id" :campaign="campaign" class="card" />
@@ -34,6 +34,13 @@ export default {
 </script>
 
 <style scoped>
+
+
+.container {
+  padding-left: 100px;
+  width: 1600px; /* Set a static width */
+  position: relative; /* Ensure positioning context for absolute positioning */
+}
 .card-container {
   display: flex;
   flex-wrap: wrap;
