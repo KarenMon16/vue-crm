@@ -2,9 +2,9 @@
   <div class="container">
     <h1>Contact List</h1>
 
-    <div >
+    <div class="container">
       <!-- Seller Selector Dropdown -->
-      <div >
+      <div>
         <select v-model="selectedSellerId" class="form-select" style="width: auto;">
           <option v-for="seller in sellers" :key="seller.id" :value="seller.id">{{ seller.name }} - {{seller.company_name}}</option>
         </select>
@@ -21,7 +21,7 @@
       <tr>
         <th class="small-column">Id</th>
         <th class="wider-column">Name</th>
-        <th class="wider-column">City</th> <!-- Added wider-column class to make the City column wider -->
+        <th class="wider-column">City</th>
         <th class="medium-column">Civil Status</th>
         <th class="medium-column">Job</th>
         <th>Last Call</th>
@@ -39,7 +39,6 @@ import DataTablesCore from 'datatables.net-bs5';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ref, defineComponent, onMounted, watch } from 'vue';
 import axios from "axios";
-import IconSelect from "@/components/icons/IconSelect.vue";
 
 DataTable.use(DataTablesCore);
 
@@ -49,21 +48,15 @@ export default defineComponent({
   },
   setup() {
     const columns = ref([
-      {title: 'Id', data: 'id'},
-      {title: 'Name', data: 'name'},
-      {title: 'City', data: 'city'},
-      {title: 'Civil Status', data: 'civil'},
-      {title: 'Job', data: 'job'},
-      { title: 'Last Call', data: 'last_call', render: function(data, type, row) {
-          return formatDate(data);
-        }
-      },
-      { title: 'Last Visit', data: 'last_visit', render: function(data, type, row) {
-          return formatDate(data);
-        }
-      },
+      { title: 'Id', data: 'id' },
+      { title: 'Name', data: 'name' },
+      { title: 'City', data: 'city' },
+      { title: 'Civil Status', data: 'civil' },
+      { title: 'Job', data: 'job' },
+      { title: 'Last Call', data: 'last_call', render: (data) => formatDate(data) },
+      { title: 'Last Visit', data: 'last_visit', render: (data) => formatDate(data) },
       {
-        title: 'Option', data: null, render: function (data, type, row) {
+        title: 'Option', data: null, render: (data, type, row) => {
           return `<button class="btn btn-light details-button" data-id="${row.id}">Details</button>`;
         }
       }
@@ -90,23 +83,52 @@ export default defineComponent({
       }
     };
 
+    const fetchLastVisit = async (contactId) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/appointments/contact?id=${contactId}`);
+        const appointments = response.data;
+        console.log("Appointments for contact ID", contactId, appointments);
+        const lastAppointment = appointments[appointments.length - 1];
+        return lastAppointment ? lastAppointment.visit_date : null;
+      } catch (error) {
+        console.error("Error fetching last visit date:", error);
+        return null;
+      }
+    };
+
+    const fetchLastCall = async (contactId) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/calls/contact?id=${contactId}`);
+        const calls = response.data;
+        console.log("Calls for contact ID", contactId, calls);
+        const lastCall = calls[0]; // Assuming the list is sorted by date and the first call is the latest
+        return lastCall ? lastCall.called_at : null;
+      } catch (error) {
+        console.error("Error fetching last call date:", error);
+        return null;
+      }
+    };
+
     const fetchContacts = async () => {
       if (selectedSellerId.value) {
         try {
           const response = await axios.get(`http://localhost:8080/contacts/seller?id=${selectedSellerId.value}`);
           const contacts = response.data;
 
-          // Format last_call and last_visit
-          contacts.forEach(contact => {
-            contact.last_call = formatDate(contact.last_call);
-            contact.last_visit = formatDate(contact.last_visit);
-          });
+          // Fetch last visit and last call date for each contact
+          const updatedContacts = await Promise.all(contacts.map(async (contact) => {
+            const lastVisitDate = await fetchLastVisit(contact.id);
+            const lastCallDate = await fetchLastCall(contact.id);
+            contact.last_visit = formatDate(lastVisitDate);
+            contact.last_call = formatDate(lastCallDate);
+            return contact;
+          }));
 
           // Log the response
-          console.log("Contacts from backend:", contacts);
+          console.log("Contacts from backend:", updatedContacts);
 
           // Update dataTableData with new contacts
-          dataTableData.value = contacts;
+          dataTableData.value = updatedContacts;
 
           // Reload DataTable
           const dataTable = refDataTable.value?.DTInstance;
@@ -140,7 +162,9 @@ export default defineComponent({
 
     // Function to format date
     const formatDate = (datetime) => {
+      if (!datetime) return 'None yet';
       const date = new Date(datetime);
+      if (isNaN(date)) return 'None yet';
       const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
       return date.toLocaleDateString('en-US', options);
     };
@@ -172,7 +196,6 @@ export default defineComponent({
   }
 });
 </script>
-
 <style scoped>
 @import 'datatables.net-bs5';
 .container {
